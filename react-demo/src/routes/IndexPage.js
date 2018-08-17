@@ -1,21 +1,73 @@
 import React from 'react';
-import { connect } from 'dva';
-import styles from './IndexPage.css';
+import {connect} from 'dva';
+import {Link, Route, Switch} from 'dva/router';
+import styles from './IndexPage.less';
+import {Button, Layout, Menu, Icon, Tabs} from 'antd';
 
-function IndexPage() {
-  return (
-    <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-        <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-      </ul>
-    </div>
-  );
+
+const {Header, Sider, Content} = Layout;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+class IndexPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    current: 'mail',
+  }
+
+
+  componentDidMount() {
+  }
+
+  handleClick = (e) => {
+    const {match,history} = this.props;
+    this.setState({
+      current: e.key,
+    });
+  }
+
+  render() {
+
+
+    return (
+      <Layout className={styles.layout}>
+        <Sider className={styles.sider}>
+
+        </Sider>
+        <Layout>
+            <Menu
+              onClick={this.handleClick}
+              selectedKeys={[this.state.current]}
+              mode="horizontal"
+            >
+              <Menu.Item key="products">
+               <Link to="/products"> <Icon type="mail"/>产品列表</Link>
+              </Menu.Item>
+              <Menu.Item key="detail" >
+                <Link to="/detail"><Icon type="appstore"/>产品详情</Link>
+              </Menu.Item>
+            </Menu>
+          <Content>
+            {this.props.children}
+          </Content>
+
+
+        </Layout>
+      </Layout>
+    );
+  }
 }
 
-IndexPage.propTypes = {
-};
 
-export default connect()(IndexPage);
+export default IndexPage;
+
+
+{/*onChange={this.onTabChange}*/
+}
+{/*animated={false}*/
+}
+{/*activeKey={this.state.activeKey}*/
+}
