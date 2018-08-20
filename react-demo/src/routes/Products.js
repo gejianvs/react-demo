@@ -158,14 +158,31 @@ export default  class Products extends React.Component {
 
   }
 
+
+  productList=()=>{
+    const {dispatch}=this.props
+    const  values={
+      name:'伟杰'
+    }
+    dispatch({
+      type:'products/productList',
+      payload: values,
+
+    }).then(()=>{
+      console.log('完成')
+    })
+  }
+
   render() {
-    const {products:{products}}=this.props
+    const {products:{data:{list}}}=this.props
     return (
       <Card id="content">
         <h2>List of Products</h2>
-        <ProductList  products={products} rowKey="id"  that={this}/>
+        <ProductList  products={list} rowKey="id"  that={this}/>
         <Button type="primary" onClick={this.ifoTest}>下载消息通知</Button>
+        <hr/>
 
+        <Button type="primary" onClick={this.productList}>接口测试</Button>
 
         <FlyBall
           changeFlyBallCount={this.changeFlyBallCount.bind(this)}
