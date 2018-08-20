@@ -1,13 +1,14 @@
 import React from 'react';
-import { Table, Popconfirm, Button } from 'antd';
-
-
-
-
+import { Table, Popconfirm, Button,notification,Icon} from 'antd';
+import {Link, Route, Switch} from 'dva/router';
 
 
 
 export default  class ProductList extends React.Component {
+
+  componentDidMount() {
+
+  }
 
 
   downLoad=(e)=>{
@@ -17,6 +18,8 @@ export default  class ProductList extends React.Component {
     // that.showFlyBall()//首次位置有偏差
 
   }
+
+
 
 
 

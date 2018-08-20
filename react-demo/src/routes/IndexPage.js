@@ -5,9 +5,8 @@ import styles from './IndexPage.less';
 import {Button, Layout, Menu, Icon, Tabs} from 'antd';
 
 
-const {Header, Sider, Content} = Layout;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const { Sider, Content} = Layout;
+
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -65,9 +64,3 @@ class IndexPage extends React.Component {
 export default IndexPage;
 
 
-{/*onChange={this.onTabChange}*/
-}
-{/*animated={false}*/
-}
-{/*activeKey={this.state.activeKey}*/
-}

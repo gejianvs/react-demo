@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import ProductList from '../components/ProductList';
 import FlyBall from '../components/FlyBall';
+import { Button,notification,Icon,Card} from 'antd';
 
 
 
@@ -13,8 +14,34 @@ import FlyBall from '../components/FlyBall';
 
 export default  class Products extends React.Component {
 
+
   componentDidMount() {
 
+    const {history:{action}} = this.props;
+
+    //弹窗的处理
+    const div = document.getElementById('mask_div1')
+
+    if (div && action == 'POP') {
+      // 当从上一页返回需要保存状态显示原页面结构
+      div.style.display = 'block'
+
+    } else if (div && action != 'POP') {
+      // 当刷新页面应当从原始开始  可通过观察弹窗结构发现可通过该方法
+      div.style.display = 'block'
+      div.getElementsByTagName('span')[0].innerHTML = ""
+    }
+
+
+  }
+
+
+  componentWillUnmount() {
+    //隐藏提示
+    const mask_div1 = document.getElementById('mask_div1')
+    if (mask_div1) {
+      mask_div1.style.display = 'none'
+    }
   }
 
   state = {
@@ -68,20 +95,85 @@ export default  class Products extends React.Component {
     })
   }
 
+// 消息通知
+
+  close = () => {
+    console.log('测试');
+  };
+  // 重新下载
+  repeatDownLoad=(key)=>{
+    console.log('重新下载逻辑')
+    notification.close(key)
+  }
+  // 查看
+  review=(key)=>{
+    const {history}=this.props
+    history.push('/detail')
+    notification.close(key)
+  }
+
+
+  openNotification = () => {
+
+    const key = `open${Date.now()}`;
+    const btn = (
+      <React.Fragment>
+        <Button type="primary" size="small" onClick={this.repeatDownLoad.bind(null,key)}>
+          重新下载
+        </Button>
+        <Button type="primary" size="small" onClick={this.review.bind(null,key)} style={{marginLeft:'10px'}}>
+          查看
+        </Button>
+      </React.Fragment>
+
+    );
+
+    const div = document.getElementById('mask_div1') ? document.getElementById('mask_div1') : document.createElement('div')
+    div.id = 'mask_div1';
+    document.body.appendChild(div)
+
+
+    notification.config({
+      getContainer: () => {
+        return div
+      },
+    });
+
+
+    notification.open({
+      message: 'Notification Title',
+      description: '测试',
+      btn,
+      key,
+      onClose: this.close,
+      duration: 0,
+    });
+  };
+
+
+  ifoTest=()=>{
+    for(let i=0;i<2;i++){
+      this.openNotification()
+    }
+
+  }
 
   render() {
     const {products:{products}}=this.props
     return (
-      <div>
+      <Card id="content">
         <h2>List of Products</h2>
         <ProductList  products={products} rowKey="id"  that={this}/>
+        <Button type="primary" onClick={this.ifoTest}>下载消息通知</Button>
+
+
         <FlyBall
           changeFlyBallCount={this.changeFlyBallCount.bind(this)}
           balls={this.state.balls}
           target={this.state.ballsTarget}
           curvature={0.0005}
           speed={1000}/>
-      </div>
+      </Card>
     );
   }
 }

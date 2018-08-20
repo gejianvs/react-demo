@@ -2,10 +2,6 @@ import React from 'react';
 import {connect} from 'dva';
 import {Route, Link, Switch} from 'dva/router';
 import {Card, Tabs, Button} from 'antd';
-import Product1 from './Product1';
-
-
-const TabPane = Tabs.TabPane;
 
 
 export default  class Detail extends React.Component {
@@ -19,7 +15,6 @@ export default  class Detail extends React.Component {
 
 
   componentDidMount() {
-    // console.log(this.props)
   }
 
   // 切换触发   主要路由跳转
@@ -40,9 +35,7 @@ export default  class Detail extends React.Component {
     }
     ;
   }
-//   linkTo=(){
-//
-// }
+
 
   render() {
     const {match}=this.props
@@ -64,21 +57,3 @@ export default  class Detail extends React.Component {
   }
 }
 
-
-// <Route path="/product1" component={Product1}/>
-
-
-{/*<Tabs*/
-}
-{/*onChange={this.onTabChange}*/
-}
-{/*animated={false}*/
-}
-{/*activeKey={this.state.activeKey}*/
-}
-{/*>*/
-}
-{/*{tabList.map(pane => <TabPane tab={pane.tab} key={pane.key}><Route path="/product1" component={Product1}/></TabPane>)}*/
-}
-{/*</Tabs>*/
-}
